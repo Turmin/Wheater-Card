@@ -2,6 +2,15 @@
 
 Open `weather-card.php` in a browser or embed it as a card. It uses Open-Meteo for location lookup and weather data, and Chart.js 4.5.1 for interactive temperature and rain charts.
 
+## Features
+
+- Responsive layout.
+- Skeleton loading state while the location and weather data are fetched.
+- Browser geolocation, place-name lookup, and exact coordinate support.
+- Interactive temperature and rain forecasts with Chart.js.
+- Automatic weather refresh every ten minutes.
+- English interface with compact Open-Meteo attribution.
+
 Location selection:
 
 - Without a query parameter, the browser location is requested.
