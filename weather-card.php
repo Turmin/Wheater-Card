@@ -65,13 +65,27 @@
         }
 
         .summary-temperature {
+            display: inline-flex;
+            align-items: baseline;
+            justify-content: center;
+            gap: 2px;
             max-width: 100%;
-            font-size: 24px;
+            font-size: 26px;
             line-height: 1;
             font-weight: 800;
             letter-spacing: -0.04em;
             font-variant-numeric: tabular-nums;
             white-space: nowrap;
+        }
+
+        .summary-temperature-value {
+            white-space: nowrap;
+        }
+
+        .summary-temperature-unit {
+            font-size: 0.6em;
+            line-height: 1;
+            letter-spacing: -0.02em;
         }
 
         .weather-summary-label {
@@ -469,7 +483,8 @@
             }
 
             .summary-temperature {
-                font-size: 20px;
+                gap: 1px;
+                font-size: 21px;
             }
 
             .weather-symbol {
@@ -543,7 +558,10 @@
 <article class="weather-card is-loading" id="weather-card" aria-live="polite" aria-busy="true">
     <div class="weather-summary" id="weather-summary" aria-label="Current weather">
         <span class="weather-symbol skeleton skeleton-symbol" id="weather-symbol" aria-hidden="true"></span>
-        <strong class="summary-temperature skeleton skeleton-summary-temperature" id="summary-temperature"></strong>
+        <strong class="summary-temperature" id="summary-temperature">
+            <span class="summary-temperature-value skeleton skeleton-summary-temperature" id="summary-temperature-value"></span>
+            <span class="summary-temperature-unit" id="summary-temperature-unit" hidden>°C</span>
+        </strong>
         <span class="weather-summary-label">Now</span>
     </div>
 
@@ -652,7 +670,8 @@
         var weatherCard = document.getElementById('weather-card');
         var weatherSummary = document.getElementById('weather-summary');
         var weatherSymbol = document.getElementById('weather-symbol');
-        var summaryTemperature = document.getElementById('summary-temperature');
+        var summaryTemperatureValue = document.getElementById('summary-temperature-value');
+        var summaryTemperatureUnit = document.getElementById('summary-temperature-unit');
         var locationName = document.getElementById('location-name');
         var locationDetails = document.getElementById('location-details');
         var currentTime = document.getElementById('current-time');
@@ -1277,7 +1296,8 @@
             var condition = getWeatherCondition(current.weather_code);
             weatherSymbol.style.color = condition.color;
             setText(weatherSymbol, condition.icon);
-            setText(summaryTemperature, formatNumber(currentTemperature, 1) + '°C');
+            setText(summaryTemperatureValue, formatNumber(currentTemperature, 1));
+            summaryTemperatureUnit.hidden = false;
             weatherSummary.setAttribute('aria-label', 'Current weather: ' + formatNumber(currentTemperature, 1) + ' degrees Celsius, ' + condition.label);
             setCurrentTime(current.time);
 
@@ -1307,7 +1327,8 @@
             setText(weatherStatus, 'Unable to load weather data.');
             setText(weatherSymbol, '!');
             weatherSymbol.style.color = '#b64b52';
-            setText(summaryTemperature, 'N/A');
+            setText(summaryTemperatureValue, 'N/A');
+            summaryTemperatureUnit.hidden = true;
             weatherSummary.setAttribute('aria-label', 'Weather unavailable');
 
             [
