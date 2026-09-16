@@ -48,12 +48,13 @@
             justify-content: center;
             gap: 4px;
             border-radius: 14px;
-            background: #f4f4f4;
+            border: 1px solid #f2d27b;
+            background: linear-gradient(145deg, #fff8df 0%, #ffe9a8 100%);
             text-align: center;
         }
 
         .weather-symbol {
-            font-size: 32px;
+            font-size: 35px;
             line-height: 1;
         }
 
@@ -63,20 +64,19 @@
             font-weight: 800;
         }
 
-        .weather-condition {
-            max-width: 100%;
-            padding: 0 7px;
+        .weather-summary-label {
             font-size: 10px;
             line-height: 1.2;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
             color: #777777;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
         }
 
         .weather-info {
             min-width: 0;
-            flex: 1;
+            width: 0;
+            flex: 1 1 0;
         }
 
         .weather-header {
@@ -132,8 +132,8 @@
         }
 
         .weather-status {
-            min-height: 14px;
-            margin: 9px 0 0;
+            min-height: 12px;
+            margin: 0;
             font-size: 11px;
             line-height: 1.2;
             color: #777777;
@@ -149,6 +149,7 @@
         }
 
         .weather-current {
+            min-width: 0;
             margin-top: 10px;
         }
 
@@ -166,7 +167,7 @@
 
         .weather-stats {
             display: grid;
-            grid-template-columns: repeat(5, minmax(70px, 1fr));
+            grid-template-columns: repeat(4, minmax(0, 1fr));
             gap: 8px;
             margin: 8px 0 0;
         }
@@ -175,8 +176,39 @@
         .forecast-stat {
             min-width: 0;
             padding: 6px 8px;
-            border-radius: 999px;
+            border: 1px solid transparent;
+            border-radius: 10px;
             background: #f4f4f4;
+        }
+
+        .weather-stat:nth-child(1),
+        .forecast-stat:nth-child(1) {
+            border-color: #cfe5f5;
+            background: #eef8ff;
+        }
+
+        .weather-stat:nth-child(2),
+        .forecast-stat:nth-child(2) {
+            border-color: #cdeeea;
+            background: #effcf9;
+        }
+
+        .weather-stat:nth-child(3),
+        .forecast-stat:nth-child(3) {
+            border-color: #f2dfae;
+            background: #fff9e8;
+        }
+
+        .weather-stat:nth-child(4),
+        .forecast-stat:nth-child(4) {
+            border-color: #ded5f2;
+            background: #f7f3ff;
+        }
+
+        .weather-stat:nth-child(5),
+        .forecast-stat:nth-child(5) {
+            border-color: #d5e8d1;
+            background: #f3fbf1;
         }
 
         .weather-stat dt,
@@ -200,6 +232,7 @@
         }
 
         .weather-next {
+            min-width: 0;
             margin-top: 10px;
         }
 
@@ -211,8 +244,8 @@
         }
 
         .forecast-stats {
-            display: flex;
-            flex-wrap: wrap;
+            display: grid;
+            grid-template-columns: repeat(5, minmax(0, 1fr));
             gap: 8px;
             margin: 7px 0 0;
         }
@@ -221,8 +254,7 @@
             display: inline-flex;
             align-items: baseline;
             gap: 4px;
-            padding-top: 5px;
-            padding-bottom: 5px;
+            padding: 5px 8px;
         }
 
         .forecast-stat dd {
@@ -231,6 +263,8 @@
         }
 
         .charts-grid {
+            width: 100%;
+            min-width: 0;
             display: grid;
             grid-template-columns: repeat(2, minmax(0, 1fr));
             gap: 10px;
@@ -239,36 +273,60 @@
 
         .chart-card {
             min-width: 0;
+            width: 100%;
+            overflow: hidden;
             padding: 8px 10px;
             border: 1px solid #eeeeee;
+            border-top: 3px solid #b64b52;
             border-radius: 12px;
-            background: #fafafa;
+            background: #fffafb;
+        }
+
+        .chart-card:nth-child(2) {
+            border-top-color: #4a749a;
+            background: #f8fbff;
         }
 
         .chart-range {
+            flex: 0 0 auto;
             font-size: 10px;
             color: #777777;
+            white-space: nowrap;
+        }
+
+        .chart-title {
+            min-width: 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
             white-space: nowrap;
         }
 
         .chart-wrap {
             position: relative;
             width: 100%;
+            min-width: 0;
             height: 86px;
             margin-top: 4px;
         }
 
         .weather-chart-canvas {
             display: block;
+            max-width: 100%;
+            min-width: 0;
             width: 100% !important;
             height: 100% !important;
         }
 
-        .chart-hint {
-            margin: 6px 0 0;
-            font-size: 10px;
-            line-height: 1.2;
-            color: #999999;
+        .weather-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        .weather-footer .weather-status {
+            flex: 1 1 auto;
         }
 
         .chart-fallback,
@@ -291,7 +349,8 @@
         }
 
         .weather-attribution {
-            margin: 8px 0 0;
+            margin: 0;
+            white-space: nowrap;
             font-size: 10px;
             line-height: 1.2;
             color: #999999;
@@ -329,11 +388,6 @@
         .skeleton-summary-temperature {
             width: 67px;
             height: 27px;
-        }
-
-        .skeleton-condition {
-            width: 53px;
-            height: 11px;
         }
 
         .skeleton-title {
@@ -401,12 +455,12 @@
                 border-radius: 12px;
             }
 
-            .weather-symbol {
-                font-size: 26px;
-            }
-
             .summary-temperature {
                 font-size: 20px;
+            }
+
+            .weather-symbol {
+                font-size: 28px;
             }
 
             .weather-title,
@@ -419,13 +473,30 @@
             }
 
             .weather-stats {
-                grid-template-columns: repeat(3, minmax(62px, 1fr));
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .forecast-stats {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+
+            .weather-footer {
+                align-items: flex-start;
+                flex-wrap: wrap;
             }
         }
 
         @media (max-width: 420px) {
             .weather-stats {
-                grid-template-columns: repeat(2, minmax(62px, 1fr));
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .forecast-stats {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .weather-attribution {
+                white-space: normal;
             }
 
             .charts-grid {
@@ -458,7 +529,7 @@
     <div class="weather-summary" id="weather-summary" aria-label="Current weather">
         <span class="weather-symbol skeleton skeleton-symbol" id="weather-symbol" aria-hidden="true"></span>
         <strong class="summary-temperature skeleton skeleton-summary-temperature" id="summary-temperature"></strong>
-        <span class="weather-condition skeleton skeleton-condition" id="weather-condition"></span>
+        <span class="weather-summary-label">Now</span>
     </div>
 
     <div class="weather-info">
@@ -471,17 +542,11 @@
             <time class="weather-time" id="current-time" datetime=""><span class="skeleton skeleton-time"></span></time>
         </header>
 
-        <p class="weather-status" id="weather-status"><span class="skeleton skeleton-status"></span></p>
-
         <section class="weather-current" aria-labelledby="current-weather-title">
             <div class="section-heading">
                 <h2 class="section-title" id="current-weather-title">Current conditions</h2>
             </div>
             <dl class="weather-stats">
-                <div class="weather-stat">
-                    <dt>Temperature</dt>
-                    <dd id="current-temp"><span class="skeleton skeleton-value"></span></dd>
-                </div>
                 <div class="weather-stat">
                     <dt>Humidity</dt>
                     <dd id="current-humidity"><span class="skeleton skeleton-value"></span></dd>
@@ -554,10 +619,12 @@
             </section>
         </div>
 
-        <p class="chart-hint" id="chart-hint">Hover or tap a point for details.</p>
         <p class="chart-fallback" id="chart-fallback" hidden>Charts are unavailable.</p>
         <p class="weather-error" id="weather-error" hidden></p>
-        <p class="weather-attribution">Weather data by <a href="https://open-meteo.com/" target="_blank" rel="noopener noreferrer">Open-Meteo</a></p>
+        <div class="weather-footer">
+            <p class="weather-status" id="weather-status"><span class="skeleton skeleton-status"></span></p>
+            <p class="weather-attribution">Weather data by <a href="https://open-meteo.com/" target="_blank" rel="noopener noreferrer">Open-Meteo</a></p>
+        </div>
     </div>
 </article>
 
@@ -571,14 +638,12 @@
         var weatherSummary = document.getElementById('weather-summary');
         var weatherSymbol = document.getElementById('weather-symbol');
         var summaryTemperature = document.getElementById('summary-temperature');
-        var weatherCondition = document.getElementById('weather-condition');
         var locationName = document.getElementById('location-name');
         var locationDetails = document.getElementById('location-details');
         var currentTime = document.getElementById('current-time');
         var weatherStatus = document.getElementById('weather-status');
         var forecastTime = document.getElementById('forecast-time');
         var chartsGrid = document.getElementById('charts-grid');
-        var chartHint = document.getElementById('chart-hint');
         var chartFallback = document.getElementById('chart-fallback');
         var weatherError = document.getElementById('weather-error');
         var temperatureChartCanvas = document.getElementById('temperature-chart-canvas');
@@ -915,41 +980,42 @@
             if (weatherCode === null) {
                 return {
                     icon: '•',
-                    label: 'Unknown conditions'
+                    label: 'Unknown conditions',
+                    color: '#777777'
                 };
             }
 
             weatherCode = Math.round(weatherCode);
 
             if (weatherCode === 0) {
-                return { icon: '☀', label: 'Clear sky' };
+                return { icon: '☀', label: 'Clear sky', color: '#d98b00' };
             }
 
             if (weatherCode <= 3) {
-                return { icon: '☁', label: 'Partly cloudy' };
+                return { icon: '☁', label: 'Partly cloudy', color: '#687d91' };
             }
 
             if (weatherCode <= 48) {
-                return { icon: '≋', label: 'Fog' };
+                return { icon: '≋', label: 'Fog', color: '#83909a' };
             }
 
             if (weatherCode <= 57) {
-                return { icon: '☂', label: 'Drizzle' };
+                return { icon: '☂', label: 'Drizzle', color: '#4a749a' };
             }
 
             if (weatherCode <= 67 || (weatherCode >= 80 && weatherCode <= 82)) {
-                return { icon: '☂', label: 'Rain' };
+                return { icon: '☂', label: 'Rain', color: '#4a749a' };
             }
 
             if (weatherCode <= 77 || (weatherCode >= 85 && weatherCode <= 86)) {
-                return { icon: '❄', label: 'Snow' };
+                return { icon: '❄', label: 'Snow', color: '#6d9fbe' };
             }
 
             if (weatherCode >= 95) {
-                return { icon: 'ϟ', label: 'Thunderstorm' };
+                return { icon: 'ϟ', label: 'Thunderstorm', color: '#8d5ba6' };
             }
 
-            return { icon: '☁', label: 'Cloudy' };
+            return { icon: '☁', label: 'Cloudy', color: '#687d91' };
         }
 
         function buildChartPoints(data, indexes) {
@@ -999,7 +1065,6 @@
         function showChartFallback(message) {
             destroyCharts();
             chartsGrid.hidden = true;
-            chartHint.hidden = true;
             temperatureChartCanvas.hidden = true;
             rainChartCanvas.hidden = true;
             temperatureChartSkeleton.hidden = true;
@@ -1140,7 +1205,6 @@
 
             chartFallback.hidden = true;
             chartsGrid.hidden = false;
-            chartHint.hidden = false;
             temperatureChartSkeleton.hidden = false;
             rainChartSkeleton.hidden = false;
 
@@ -1196,13 +1260,12 @@
             weatherCard.setAttribute('aria-busy', 'false');
 
             var condition = getWeatherCondition(current.weather_code);
+            weatherSymbol.style.color = condition.color;
             setText(weatherSymbol, condition.icon);
             setText(summaryTemperature, formatNumber(currentTemperature, 1) + '°C');
-            setText(weatherCondition, condition.label);
             weatherSummary.setAttribute('aria-label', 'Current weather: ' + formatNumber(currentTemperature, 1) + ' degrees Celsius, ' + condition.label);
             setCurrentTime(current.time);
 
-            setMetric('current-temp', current.temperature_2m, '°C', 1);
             setMetric('current-humidity', current.relative_humidity_2m, '%', 0);
             setMetric('current-rain', current.rain, 'mm', 1);
             setMetric('current-precipitation-chance', arrayValue(hourly.precipitation_probability, indexes.currentIndex), '%', 0);
@@ -1228,12 +1291,11 @@
             setText(currentTime, 'N/A');
             setText(weatherStatus, 'Unable to load weather data.');
             setText(weatherSymbol, '!');
+            weatherSymbol.style.color = '#b64b52';
             setText(summaryTemperature, 'N/A');
-            setText(weatherCondition, 'Unavailable');
             weatherSummary.setAttribute('aria-label', 'Weather unavailable');
 
             [
-                'current-temp',
                 'current-humidity',
                 'current-rain',
                 'current-precipitation-chance',
