@@ -2,7 +2,11 @@
     'use strict';
 
     var GEOLOCATION_TIMEOUT = 10000;
-    var REFRESH_INTERVAL = 10 * 60 * 1000;
+    var FORECAST_CACHE_TTL = 10 * 60 * 1000;
+    var FORECAST_MAX_STALE_AGE = 60 * 60 * 1000;
+    var GEOCODING_CACHE_TTL = 24 * 60 * 60 * 1000;
+    var CACHE_PREFIX = 'weather-card:v1:';
+    var REFRESH_INTERVAL = FORECAST_CACHE_TTL;
     var weatherCard = document.getElementById('weather-card');
     var weatherSummary = document.getElementById('weather-summary');
     var weatherSymbol = document.getElementById('weather-symbol');
@@ -113,6 +117,7 @@
 
     function fetchJson(url) {
         return fetch(url, {
+            cache: 'no-store',
             headers: {
                 Accept: 'application/json'
             }
@@ -123,6 +128,103 @@
 
             return response.json();
         });
+    }
+
+    function getCacheStorage() {
+        try {
+            if (window.localStorage && typeof window.localStorage.getItem === 'function') {
+                return window.localStorage;
+            }
+        } catch (error) {
+            // Storage can be unavailable in private or restricted browsing contexts.
+        }
+
+        return null;
+    }
+
+    function removeCacheEntry(key) {
+        var storage = getCacheStorage();
+
+        if (!storage || !key) {
+            return;
+        }
+
+        try {
+            storage.removeItem(key);
+        } catch (error) {
+            // Ignore storage failures and continue without a cache.
+        }
+    }
+
+    function readCacheEntry(key, maxAge) {
+        var storage = getCacheStorage();
+        var rawEntry;
+        var entry;
+        var age;
+
+        if (!storage || !key) {
+            return null;
+        }
+
+        try {
+            rawEntry = storage.getItem(key);
+
+            if (!rawEntry) {
+                return null;
+            }
+
+            entry = JSON.parse(rawEntry);
+
+            if (!entry || !isFiniteNumber(entry.storedAt) || !Object.prototype.hasOwnProperty.call(entry, 'data')) {
+                removeCacheEntry(key);
+                return null;
+            }
+
+            age = Date.now() - entry.storedAt;
+
+            if (age < 0 || age > maxAge) {
+                removeCacheEntry(key);
+                return null;
+            }
+
+            entry.age = age;
+            return entry;
+        } catch (error) {
+            removeCacheEntry(key);
+            return null;
+        }
+    }
+
+    function writeCacheEntry(key, data) {
+        var storage = getCacheStorage();
+
+        if (!storage || !key) {
+            return;
+        }
+
+        try {
+            storage.setItem(key, JSON.stringify({
+                storedAt: Date.now(),
+                data: data
+            }));
+        } catch (error) {
+            // Ignore quota and storage failures; the API remains the source of truth.
+        }
+    }
+
+    function getGeocodingCacheKey(query) {
+        return CACHE_PREFIX + 'geocode:' + encodeURIComponent(query.trim().toLowerCase());
+    }
+
+    function getForecastCacheKey(location) {
+        var latitude = readNumber(location && location.latitude);
+        var longitude = readNumber(location && location.longitude);
+
+        if (latitude === null || longitude === null) {
+            return null;
+        }
+
+        return CACHE_PREFIX + 'forecast:' + latitude.toFixed(4) + ':' + longitude.toFixed(4);
     }
 
     function parseCoordinate(value, minimum, maximum) {
@@ -198,6 +300,13 @@
     }
 
     function geocodeLocation(query) {
+        var cacheKey = getGeocodingCacheKey(query);
+        var cached = readCacheEntry(cacheKey, GEOCODING_CACHE_TTL);
+
+        if (cached && cached.data && isFiniteNumber(Number(cached.data.latitude)) && isFiniteNumber(Number(cached.data.longitude))) {
+            return Promise.resolve(cached.data);
+        }
+
         var url = new URL('https://geocoding-api.open-meteo.com/v1/search');
 
         url.searchParams.set('name', query);
@@ -221,12 +330,16 @@
                 }
             });
 
-            return {
+            var location = {
                 latitude: Number(result.latitude),
                 longitude: Number(result.longitude),
                 name: result.name || query,
                 detail: uniqueDetailParts.join(' · ')
             };
+
+            writeCacheEntry(cacheKey, location);
+
+            return location;
         });
     }
 
@@ -685,14 +798,36 @@
     }
 
     function loadWeather(location, initialLoad) {
-        if (initialLoad) {
-            setText(weatherStatus, 'Locating weather data...');
+        var cacheKey = getForecastCacheKey(location);
+        var cached = cacheKey ? readCacheEntry(cacheKey, FORECAST_MAX_STALE_AGE) : null;
+        var usedCachedData = false;
+
+        if (cached) {
+            try {
+                renderWeather(cached.data, location);
+                usedCachedData = true;
+            } catch (error) {
+                removeCacheEntry(cacheKey);
+            }
+        }
+
+        if (usedCachedData && cached.age < FORECAST_CACHE_TTL) {
+            return Promise.resolve();
+        }
+
+        if (usedCachedData) {
+            setText(weatherStatus, 'Refreshing weather data...');
+        } else if (initialLoad) {
+            setText(weatherStatus, 'Loading weather data...');
         }
 
         return fetchJson(buildForecastUrl(location)).then(function (data) {
             renderWeather(data, location);
+            writeCacheEntry(cacheKey, data);
         }).catch(function (error) {
-            if (initialLoad) {
+            if (usedCachedData) {
+                setText(weatherStatus, 'Showing cached weather; refresh failed.');
+            } else if (initialLoad) {
                 showInitialError(error);
             } else {
                 setText(weatherStatus, 'Showing the last update; refresh failed.');
