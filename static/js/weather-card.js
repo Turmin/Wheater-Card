@@ -12,7 +12,6 @@
     var locationDetails = document.getElementById('location-details');
     var currentTime = document.getElementById('current-time');
     var weatherStatus = document.getElementById('weather-status');
-    var forecastTime = document.getElementById('forecast-time');
     var chartsGrid = document.getElementById('charts-grid');
     var chartFallback = document.getElementById('chart-fallback');
     var weatherError = document.getElementById('weather-error');
@@ -642,7 +641,6 @@
         setMetric('current-precipitation-chance', arrayValue(hourly.precipitation_probability, indexes.currentIndex), '%', 0);
         setMetric('current-wind-speed', current.wind_speed_10m, 'km/h', 0);
         setForecastMetric('forecast', hourly, indexes.forecastIndex);
-        setText(forecastTime, formatClockValue(indexes.times[indexes.forecastIndex]));
         setText(weatherStatus, 'Updated ' + formatClockValue(current.time));
 
         weatherError.hidden = true;
@@ -681,7 +679,6 @@
             setMetric(id, null, '', 0);
         });
 
-        setText(forecastTime, 'N/A');
         showChartFallback('Charts are unavailable until weather data loads.');
         weatherError.textContent = message;
         weatherError.hidden = false;

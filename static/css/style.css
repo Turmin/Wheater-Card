@@ -152,7 +152,6 @@ body {
 }
 
 .section-heading,
-.forecast-heading,
 .chart-heading {
     display: flex;
     align-items: baseline;
@@ -246,13 +245,6 @@ body {
 .weather-next {
     min-width: 0;
     margin-top: 10px;
-}
-
-.forecast-time {
-    font-size: 11px;
-    line-height: 1.2;
-    font-weight: 700;
-    color: #777777;
 }
 
 .forecast-stats {
@@ -425,11 +417,6 @@ body {
 .skeleton-value {
     width: 45px;
     height: 14px;
-}
-
-.skeleton-forecast-time {
-    width: 38px;
-    height: 12px;
 }
 
 .skeleton-chart {

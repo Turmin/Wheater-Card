@@ -53,10 +53,7 @@
         </section>
 
         <section class="weather-next" aria-labelledby="forecast-weather-title">
-            <div class="forecast-heading">
-                <h2 class="forecast-title" id="forecast-weather-title">Next hour</h2>
-                <time class="forecast-time" id="forecast-time"><span class="skeleton skeleton-forecast-time"></span></time>
-            </div>
+            <h2 class="forecast-title" id="forecast-weather-title">Next hour</h2>
             <dl class="forecast-stats">
                 <div class="forecast-stat">
                     <dt>Temp</dt>
