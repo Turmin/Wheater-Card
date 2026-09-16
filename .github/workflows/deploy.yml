@@ -43,6 +43,7 @@ jobs:
             --include='manifest.json' \
             --include='css/***' \
             --include='js/***' \
+            --include='static/***' \
             --include='icons/***' \
             --include='screenshots/***' \
             --include='admin/***' \
