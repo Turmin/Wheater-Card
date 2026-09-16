@@ -46,7 +46,8 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 4px;
+            gap: 3px;
+            padding: 10px 6px 9px;
             border-radius: 14px;
             border: 1px solid #f2d27b;
             background: linear-gradient(145deg, #fff8df 0%, #ffe9a8 100%);
@@ -54,21 +55,31 @@
         }
 
         .weather-symbol {
-            font-size: 35px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 32px;
+            font-size: 32px;
             line-height: 1;
         }
 
         .summary-temperature {
-            font-size: 25px;
-            line-height: 1.1;
+            max-width: 100%;
+            font-size: 24px;
+            line-height: 1;
             font-weight: 800;
+            letter-spacing: -0.04em;
+            font-variant-numeric: tabular-nums;
+            white-space: nowrap;
         }
 
         .weather-summary-label {
-            font-size: 10px;
-            line-height: 1.2;
+            margin-top: 1px;
+            font-size: 9px;
+            line-height: 1;
             font-weight: 700;
-            letter-spacing: 0.08em;
+            letter-spacing: 0.12em;
             text-transform: uppercase;
             color: #777777;
         }
@@ -452,6 +463,8 @@
                 flex-basis: 86px;
                 width: 86px;
                 height: 86px;
+                gap: 2px;
+                padding: 8px 4px 7px;
                 border-radius: 12px;
             }
 
@@ -460,6 +473,8 @@
             }
 
             .weather-symbol {
+                width: 30px;
+                height: 28px;
                 font-size: 28px;
             }
 
