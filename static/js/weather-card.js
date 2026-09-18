@@ -5,7 +5,8 @@
     var FORECAST_CACHE_TTL = 10 * 60 * 1000;
     var FORECAST_MAX_STALE_AGE = 60 * 60 * 1000;
     var GEOCODING_CACHE_TTL = 24 * 60 * 60 * 1000;
-    var CACHE_PREFIX = 'weather-card:v1:';
+    var CACHE_PREFIX = 'weather-card:v2:';
+    var MINUTELY_FORECAST_POINTS = 25;
     var REFRESH_INTERVAL = FORECAST_CACHE_TTL;
     var weatherCard = document.getElementById('weather-card');
     var weatherSummary = document.getElementById('weather-summary');
@@ -417,7 +418,12 @@
             'wind_speed_10m',
             'weather_code'
         ].join(','));
+        url.searchParams.set('minutely_15', [
+            'temperature_2m',
+            'rain'
+        ].join(','));
         url.searchParams.set('forecast_hours', '7');
+        url.searchParams.set('forecast_minutely_15', String(MINUTELY_FORECAST_POINTS));
         url.searchParams.set('timezone', 'auto');
         url.searchParams.set('temperature_unit', 'celsius');
         url.searchParams.set('wind_speed_unit', 'kmh');
@@ -506,6 +512,30 @@
         var points = [];
         var currentTemperature = readNumber(current.temperature_2m);
         var times = indexes.times;
+        var minutely = data.minutely_15;
+        var minutelyTimes = minutely && Array.isArray(minutely.time) ? minutely.time : [];
+
+        if (minutelyTimes.length > 0) {
+            for (var minutelyIndex = 0; minutelyIndex < minutelyTimes.length && points.length < MINUTELY_FORECAST_POINTS; minutelyIndex += 1) {
+                var minutelyTemperature = arrayValue(minutely.temperature_2m, minutelyIndex);
+
+                if (minutelyTemperature === null) {
+                    continue;
+                }
+
+                points.push({
+                    label: points.length === 0 ? 'Now' : formatClockValue(minutelyTimes[minutelyIndex]),
+                    temperature: minutelyTemperature,
+                    rain: arrayValue(minutely.rain, minutelyIndex)
+                });
+            }
+
+            if (points.length >= 2) {
+                return points;
+            }
+
+            points = [];
+        }
 
         if (currentTemperature !== null) {
             points.push({

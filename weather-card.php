@@ -82,7 +82,7 @@
             <section class="chart-card" aria-labelledby="temperature-chart-title">
                 <div class="chart-heading">
                     <h2 class="chart-title" id="temperature-chart-title">Temperature forecast</h2>
-                    <span class="chart-range">Next 6 hours</span>
+                    <span class="chart-range">Next 6 hours · 15 min</span>
                 </div>
                 <div class="chart-wrap">
                     <span class="skeleton skeleton-chart" id="temperature-chart-skeleton" aria-hidden="true"></span>
@@ -93,7 +93,7 @@
             <section class="chart-card" aria-labelledby="rain-chart-title">
                 <div class="chart-heading">
                     <h2 class="chart-title" id="rain-chart-title">Rain forecast</h2>
-                    <span class="chart-range">Next 6 hours</span>
+                    <span class="chart-range">Next 6 hours · 15 min</span>
                 </div>
                 <div class="chart-wrap">
                     <span class="skeleton skeleton-chart" id="rain-chart-skeleton" aria-hidden="true"></span>
