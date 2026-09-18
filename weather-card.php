@@ -15,7 +15,6 @@
             <span class="summary-temperature-value skeleton skeleton-summary-temperature" id="summary-temperature-value"></span>
             <span class="summary-temperature-unit" id="summary-temperature-unit" hidden>°C</span>
         </strong>
-        <span class="weather-summary-label">Now</span>
     </div>
 
     <div class="weather-info">
