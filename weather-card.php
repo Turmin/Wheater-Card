@@ -1,5 +1,18 @@
+<?php
+function isDarkModeRequested(): bool {
+    if (!isset($_GET['darkmode']) || is_array($_GET['darkmode'])) {
+        return false;
+    }
+
+    $value = strtolower(trim((string) $_GET['darkmode']));
+
+    return $value === '' || in_array($value, ['1', 'true', 'yes', 'on'], true);
+}
+
+$darkMode = isDarkModeRequested();
+?>
 <!doctype html>
-<html lang="en">
+<html lang="en" class="<?= $darkMode ? 'dark-mode' : '' ?>">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">

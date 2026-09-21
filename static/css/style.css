@@ -12,6 +12,7 @@ body {
     font-family: Arial, Helvetica, sans-serif;
     overflow: hidden;
     border-radius: 14px;
+    clip-path: inset(0 round 14px);
 }
 
 .weather-card {
@@ -27,6 +28,95 @@ body {
     border-radius: 14px !important;
     overflow: hidden;
     clip-path: inset(0 round 14px);
+}
+
+html.dark-mode .weather-card {
+    background: #1b1f24;
+    color: #f1f3f5;
+}
+
+html.dark-mode .weather-summary {
+    border-color: #80681d;
+    background: linear-gradient(145deg, #4a3f1f 0%, #2f2918 100%);
+}
+
+html.dark-mode .label,
+html.dark-mode .section-title,
+html.dark-mode .forecast-title,
+html.dark-mode .chart-title {
+    color: #ff7b84;
+}
+
+html.dark-mode .location-details,
+html.dark-mode .weather-time,
+html.dark-mode .weather-status,
+html.dark-mode .weather-stat dt,
+html.dark-mode .forecast-stat dt,
+html.dark-mode .chart-range,
+html.dark-mode .weather-attribution {
+    color: #aeb6bf;
+}
+
+html.dark-mode .weather-stat,
+html.dark-mode .forecast-stat {
+    background: #272d34;
+}
+
+html.dark-mode .weather-stat:nth-child(1),
+html.dark-mode .forecast-stat:nth-child(1) {
+    border-color: #31516a;
+    background: #202f3b;
+}
+
+html.dark-mode .weather-stat:nth-child(2),
+html.dark-mode .forecast-stat:nth-child(2) {
+    border-color: #2e5a55;
+    background: #203834;
+}
+
+html.dark-mode .weather-stat:nth-child(3),
+html.dark-mode .forecast-stat:nth-child(3) {
+    border-color: #65552b;
+    background: #3b3420;
+}
+
+html.dark-mode .weather-stat:nth-child(4),
+html.dark-mode .forecast-stat:nth-child(4) {
+    border-color: #554977;
+    background: #302b40;
+}
+
+html.dark-mode .weather-stat:nth-child(5),
+html.dark-mode .forecast-stat:nth-child(5) {
+    border-color: #3d5d3b;
+    background: #293b28;
+}
+
+html.dark-mode .chart-card {
+    border-color: #353c44;
+    background: #282329;
+}
+
+html.dark-mode .chart-card:nth-child(2) {
+    background: #222d38;
+}
+
+html.dark-mode .chart-fallback {
+    background: #272d34;
+    color: #aeb6bf;
+}
+
+html.dark-mode .weather-error {
+    background: #41272b;
+    color: #ff9da5;
+}
+
+html.dark-mode .skeleton {
+    background: #343b43;
+}
+
+html.dark-mode .skeleton::after {
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.14), transparent);
 }
 
 .weather-summary {

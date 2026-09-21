@@ -29,6 +29,7 @@
     var refreshTimer = null;
     var temperatureChartInstance = null;
     var rainChartInstance = null;
+    var darkMode = document.documentElement.classList.contains('dark-mode');
 
     function isFiniteNumber(value) {
         return typeof value === 'number' && isFinite(value);
@@ -614,7 +615,7 @@
                         pointRadius: 3,
                         pointHoverRadius: 6,
                         pointHitRadius: 14,
-                        pointBackgroundColor: '#ffffff',
+                        pointBackgroundColor: darkMode ? '#1b1f24' : '#ffffff',
                         pointBorderColor: color,
                         pointBorderWidth: 2,
                         tension: 0.35,
@@ -663,7 +664,7 @@
                                 display: false
                             },
                             ticks: {
-                                color: '#888888',
+                                color: darkMode ? '#aeb6bf' : '#888888',
                                 font: {
                                     family: 'Arial, Helvetica, sans-serif',
                                     size: 9
@@ -677,13 +678,13 @@
                             beginAtZero: beginAtZero,
                             grace: '10%',
                             grid: {
-                                color: '#e7e7e7'
+                                color: darkMode ? '#3b424a' : '#e7e7e7'
                             },
                             border: {
                                 display: false
                             },
                             ticks: {
-                                color: '#888888',
+                                color: darkMode ? '#aeb6bf' : '#888888',
                                 font: {
                                     family: 'Arial, Helvetica, sans-serif',
                                     size: 9
