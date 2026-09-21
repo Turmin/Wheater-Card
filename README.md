@@ -18,4 +18,6 @@ Location selection:
 - Use `weather-card.php?lat=52.37&lon=4.90` for exact coordinates.
 - Add `darkmode=1` to either URL to use the dark theme, for example `weather-card.php?location=Amsterdam&darkmode=1`.
 
+For transparent rounded corners in an iframe, the embedding iframe must also allow a transparent background, for example with `allowtransparency="true"` and `background: transparent`.
+
 Browser geolocation requires a secure context (HTTPS or localhost). The card refreshes weather data automatically every ten minutes. Hover or tap a chart point to see its value.
