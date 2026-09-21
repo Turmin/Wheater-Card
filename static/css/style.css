@@ -8,24 +8,20 @@ body {
     padding: 0;
     width: 100%;
     height: 100%;
-    background: transparent !important;
+    background: transparent;
     font-family: Arial, Helvetica, sans-serif;
-    overflow: hidden;
-    border-radius: 14px;
 }
 
 .weather-card {
     width: 100%;
-    height: calc(100% - 10px);
+    height: 100%;
     max-width: none;
-    margin-bottom: 10px;
     display: flex;
     align-items: flex-start;
     gap: 16px;
     padding: 14px;
     background: #ffffff;
     color: #151515;
-    border-radius: 14px !important;
     overflow: hidden;
 }
 
@@ -598,7 +594,6 @@ html.dark-mode .skeleton::after {
     .weather-card {
         gap: 12px;
         padding: 12px;
-        border-radius: 14px;
     }
 
     .weather-summary {
